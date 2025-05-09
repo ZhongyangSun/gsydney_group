@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  # 1. PostgreSQL + PostGIS
+  db:
+    image: postgis/postgis:15-3.4
+    container_name: pg_gsa
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: pg
+      POSTGRES_DB: gsa
+    ports:
+      - "5432:5432"
+    volumes:
+      - gsa_pgdata:/var/lib/postgresql/data
+
+
+  # 2. pgAdmin 4 web GUI
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: gsydney_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: zysun.dev@gmail.com     
+      PGADMIN_DEFAULT_PASSWORD: admin123    
+      PGADMIN_CONFIG_SERVER_MODE: "True"
+    ports:
+      - "8080:80"                        # http://localhost:8080
+    volumes:
+      - gsa_pgadmin:/var/lib/pgadmin
+    depends_on:
+      - db
+volumes:
+  gsa_pgdata:
+  gsa_pgadmin:

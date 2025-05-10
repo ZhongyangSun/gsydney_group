@@ -26,7 +26,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin123    
       PGADMIN_CONFIG_SERVER_MODE: "True"
     ports:
-      - "8080:80"                        # http://localhost:8080
+      - "8080:80"
     volumes:
       - gsa_pgadmin:/var/lib/pgadmin
     depends_on:
